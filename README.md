@@ -1,1 +1,1 @@
-# ansible-role-grafana
+# terraform-grafana-config-module
