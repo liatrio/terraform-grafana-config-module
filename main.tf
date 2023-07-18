@@ -13,18 +13,27 @@ locals {
 }
 
 # Fetch the output from "moduleA"
-data "terraform_remote_state" "grafana_module" {
-  backend = "s3"
-  config = {
-    bucket = "observability-us-east-1-dev-tf-state-test"
-    key    = "nonprod/aws-managed-services/terraform.tfstate"
-    region = "us-east-1"
-  }
+# data "terraform_remote_state" "managed_grafana" {
+#   backend = "s3"
+#   config = {
+#     bucket = "observability-us-east-1-dev-tf-state-test"
+#     key    = "nonprod/aws-managed-services/terraform.tfstate"
+#     region = "us-east-1"
+#   }
+# }
+
+#data "aws_secretsmanager_secret" "amg_token" {
+#  name = var.grafana_api_token
+#}
+
+data "aws_secretsmanager_secret_version" "amg_token" {
+  secret_id = "AMG_API_Token"
 }
+
 
 provider "grafana" {
   url  = local.grafana_url
-  auth = data.terraform_remote_state.grafana_module.workspace_api_keys["admin"].key
+  auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
 }
 
 resource "grafana_folder" "this" {
@@ -35,5 +44,14 @@ resource "grafana_folder" "this" {
 resource "grafana_dashboard" "this" {
   org_id = local.org_id
   folder = "adrielp"
-  url    = "https://grafana.com/api/dashboards/6098/revisions/1/download"
+  config_json = jsonencode({
+    id            = 12345,
+    uid           = "test-ds-dashboard-uid"
+    title         = "Production Overview",
+    tags          = ["templated"],
+    timezone      = "browser",
+    schemaVersion = 16,
+    version       = 0,
+    refresh       = "25s"
+  })
 }
