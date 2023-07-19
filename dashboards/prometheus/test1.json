@@ -24,7 +24,6 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 19,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -104,7 +103,7 @@
             "sort": "none"
           }
         },
-        "title": "Panel Title",
+        "title": "Panel Title Test2",
         "type": "timeseries"
       }
     ],
@@ -123,7 +122,6 @@
     "timepicker": {},
     "timezone": "",
     "title": "test1",
-    "uid": "DRRc48CVk",
     "version": 1,
     "weekStart": ""
   }
