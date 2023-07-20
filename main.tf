@@ -11,20 +11,20 @@ locals {
     org_id = 1
     grafana_url = "https://g-631c971d51.grafana-workspace.us-east-1.amazonaws.com"
     
-    # Grabs the subfolders and files within the dashboards folder.
+    # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
     subfolders_and_files_set = fileset("./dashboards", "**")
-    # Creates another list that contains just the names of the subfolders.
+    # Creates a list that contains the names of the subfolders.
     subfolder_names = distinct([for path in local.subfolders_and_files_set : dirname(path)])
-    # Pulls the actual grafana folder details including id.
+    # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.
     grafana_folder_map = {
       for folder in toset(local.subfolder_names) : folder => grafana_folder.dashboard_folders[folder]
     }
-    # Organizes the data so each folder is a key with the Json being entries in a list.
+    # Creates a dictionary, mapping folder names to their corresponding files.
     folder_files_map = {
       for folder in local.subfolder_names :
       folder => [for file in local.subfolders_and_files_set : file if dirname(file) == folder]
     }
-    # Flattens the map so that terraform can create the resources in one pass.
+    # Creates a list of dictionaries representing flattened dashboard data.
     flattened_dashboard_data = flatten([
     for folder_name, file_paths in local.folder_files_map : [
       for file_path in file_paths : {
