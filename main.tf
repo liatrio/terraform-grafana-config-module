@@ -57,5 +57,4 @@ resource "grafana_dashboard" "dynamic_dashboard" {
   overwrite = true
   folder  = local.grafana_folder_map[each.value["folder_name"]].id
   config_json = file("${path.module}/dashboards/${each.key}")
-  # Other dashboard configuration options can be added here if needed
 }
