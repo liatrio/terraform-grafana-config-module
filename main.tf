@@ -58,3 +58,18 @@ resource "grafana_dashboard" "dynamic_dashboard" {
   folder  = local.grafana_folder_map[each.value["folder_name"]].id
   config_json = file("${path.module}/dashboards/${each.key}")
 }
+
+resource "grafana_data_source" "dynamic_data_source" {
+  for_each = { for item in var.data_source_map : item.data_source_name => item }
+  type = each.value["datasource_type"]
+  name = each.key
+
+  # Giving priority to Managed Prometheus datasources
+  is_default = false
+  json_data_encoded = jsonencode({
+    default_region  = var.aws_region
+    sigv4_auth      = true
+    sigv4_auth_type = "workspace-iam-role"
+    sigv4_region    = var.aws_region
+  })
+}
