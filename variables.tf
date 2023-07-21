@@ -11,7 +11,7 @@ variable "aws_region" {
 }
 
 variable "data_source_map" {
-    description = "A list of maps representing datasource information. Each map defines a data source with its type and name."
+    description = "A list of maps representing datasource information. Each map defines a data source with its type, name, and url."
     type = list(map(string))
     default = [
     {"data_source_type" = "cloudwatch"
