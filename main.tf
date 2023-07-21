@@ -62,7 +62,7 @@ resource "grafana_dashboard" "dynamic_dashboard" {
 resource "grafana_data_source" "dynamic_data_source" {
   for_each = { for item in var.data_source_map : item.data_source_name => item }
   type = each.value["data_source_type"]
-  name = each.key
+  name = each.value["data_source_name"]
   url = each.value["data_source_url"]
 
   # Giving priority to Managed Prometheus datasources
