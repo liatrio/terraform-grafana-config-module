@@ -15,11 +15,14 @@ variable "data_source_map" {
     type = list(map(string))
     default = [
     {"data_source_type" = "cloudwatch"
-    "data_source_name" = "Name1"},
+    "data_source_name" = "Name1"
+    "data_source_url" = "https://cloudwatch.amazonaws.com"},
     {"data_source_type" = "prometheus"
-    "datasource_name" = "Name2"},
+    "data_source_name" = "Name2"
+    "data_source_url" = "https://prometheus.amazonaws.com"},
     {"data_source_type" = "prometheus"
-    "data_source_name" = "Name3"}
+    "data_source_name" = "Name3"
+    "data_source_url" = "https://prometheus2.amazonaws.com"}
     ]
 }
 
