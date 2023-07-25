@@ -30,3 +30,8 @@ variable "dashboard_configs_folder" {
     description = "The path to the dashboards folder where the configuration files are located."
     type = string
 }
+
+variable "grafana_url" {
+    description = "The url to your Grafana instance."
+    type = string
+}

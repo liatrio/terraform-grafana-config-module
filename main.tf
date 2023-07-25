@@ -9,7 +9,7 @@ terraform {
 
 locals {
     org_id = 1
-    grafana_url = "https://g-631c971d51.grafana-workspace.us-east-1.amazonaws.com"
+    grafana_url = var.grafana_url
     
     # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
     subfolders_and_files_set = fileset("${var.dashboard_configs_folder}/dashboards", "**")
@@ -51,7 +51,7 @@ resource "grafana_folder" "dashboard_folders" {
   title  = each.key
 }
 
-resource "grafana_dashboard" "dynamic_dashboard" {
+resource "grafana_dashboard" "dashboard_from_file" {
   for_each = { for item in local.flattened_dashboard_data : item.file_path => item }
 
   overwrite = true
@@ -59,7 +59,7 @@ resource "grafana_dashboard" "dynamic_dashboard" {
   config_json = file("${var.dashboard_configs_folder}/dashboards/${each.key}")
 }
 
-resource "grafana_data_source" "dynamic_data_source" {
+resource "grafana_data_source" "data_source_from_map" {
   for_each = { for item in var.data_source_map : item.data_source_name => item }
   type = each.value["data_source_type"]
   name = each.value["data_source_name"]
