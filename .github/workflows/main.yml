@@ -1,0 +1,22 @@
+# This workflow is the main workflow on pushing to the main branch
+# and runs builds, releases, conventional commits, and pushes.
+
+name: Main
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code with commit history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: go-semantic-release/action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          changelog-generator-opt: "emojis=true"
