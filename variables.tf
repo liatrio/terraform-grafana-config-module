@@ -26,14 +26,8 @@ variable "data_source_map" {
     ]
 }
 
-variable "data_source_name" {
-    description = "The name of the data source to be created."
+variable "dashboard_configs_folder" {
+    description = "The path to the folder where the Dashboard configuration files are located."
     type = string
-    default = "default_name"
-}
-
-variable "data_source_type" {
-    description = "The type of the data source to be created."
-    type = string
-    default = "prometheus"
+    default = "../"
 }
