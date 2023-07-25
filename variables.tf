@@ -29,5 +29,4 @@ variable "data_source_map" {
 variable "dashboard_configs_folder" {
     description = "The path to the dashboards folder where the configuration files are located."
     type = string
-    default = "../"
 }
