@@ -12,7 +12,7 @@ locals {
   grafana_url = var.grafana_url
 
   # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
-  subfolders_and_files_set = fileset("${var.dashboard_configs_folder}/dashboards", "**")
+  subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
   # Creates a list that contains the names of the subfolders.
   subfolder_names = distinct([for path in local.subfolders_and_files_set : dirname(path)])
   # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.
@@ -56,7 +56,7 @@ resource "grafana_dashboard" "dashboard_from_file" {
 
   overwrite   = true
   folder      = local.grafana_folder_map[each.value["folder_name"]].id
-  config_json = file("${var.dashboard_configs_folder}/dashboards/${each.key}")
+  config_json = file("${var.dashboard_configs_folder}/${each.key}")
 }
 
 resource "grafana_data_source" "data_source_from_map" {
