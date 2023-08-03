@@ -46,7 +46,7 @@ provider "grafana" {
 
 resource "grafana_folder" "dashboard_folders" {
   for_each = toset(local.subfolder_names)
-  
+
   org_id = local.org_id
   title  = each.key
 }
@@ -61,9 +61,9 @@ resource "grafana_dashboard" "dashboard_from_file" {
 
 resource "grafana_data_source" "data_source_from_map" {
   for_each = { for item in var.data_source_map : item.data_source_name => item }
-  type = each.value["data_source_type"]
-  name = each.value["data_source_name"]
-  url = each.value["data_source_url"]
+  type     = each.value["data_source_type"]
+  name     = each.value["data_source_name"]
+  url      = each.value["data_source_url"]
 
   # Giving priority to Managed Prometheus datasources
   is_default = false
