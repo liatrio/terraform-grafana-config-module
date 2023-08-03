@@ -8,24 +8,24 @@ terraform {
 }
 
 locals {
-    org_id = 1
-    grafana_url = var.grafana_url
-    
-    # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
-    subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
-    # Creates a list that contains the names of the subfolders.
-    subfolder_names = distinct([for path in local.subfolders_and_files_set : dirname(path)])
-    # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.
-    grafana_folder_map = {
-      for folder in toset(local.subfolder_names) : folder => grafana_folder.dashboard_folders[folder]
-    }
-    # Creates a dictionary, mapping folder names to their corresponding files.
-    folder_files_map = {
-      for folder in local.subfolder_names :
-      folder => [for file in local.subfolders_and_files_set : file if dirname(file) == folder]
-    }
-    # Creates a list of dictionaries representing flattened dashboard data.
-    flattened_dashboard_data = flatten([
+  org_id      = 1
+  grafana_url = var.grafana_url
+
+  # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
+  subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
+  # Creates a list that contains the names of the subfolders.
+  subfolder_names = distinct([for path in local.subfolders_and_files_set : dirname(path)])
+  # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.
+  grafana_folder_map = {
+    for folder in toset(local.subfolder_names) : folder => grafana_folder.dashboard_folders[folder]
+  }
+  # Creates a dictionary, mapping folder names to their corresponding files.
+  folder_files_map = {
+    for folder in local.subfolder_names :
+    folder => [for file in local.subfolders_and_files_set : file if dirname(file) == folder]
+  }
+  # Creates a list of dictionaries representing flattened dashboard data.
+  flattened_dashboard_data = flatten([
     for folder_name, file_paths in local.folder_files_map : [
       for file_path in file_paths : {
         folder_name = folder_name
@@ -54,8 +54,8 @@ resource "grafana_folder" "dashboard_folders" {
 resource "grafana_dashboard" "dashboard_from_file" {
   for_each = { for item in local.flattened_dashboard_data : item.file_path => item }
 
-  overwrite = true
-  folder  = local.grafana_folder_map[each.value["folder_name"]].id
+  overwrite   = true
+  folder      = local.grafana_folder_map[each.value["folder_name"]].id
   config_json = file("${var.dashboard_configs_folder}/${each.key}")
 }
 
