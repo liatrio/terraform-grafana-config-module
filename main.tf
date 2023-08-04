@@ -36,12 +36,12 @@ locals {
 }
 
 data "aws_secretsmanager_secret_version" "amg_token" {
-  secret_id = "AMG_API_Token"
+  secret_id = var.asm_api_token_name
 }
 
 provider "grafana" {
   url  = local.grafana_url
-  auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
+  auth = data.aws_secretsmanager_secret_version.amg_token.key
 }
 
 resource "grafana_folder" "dashboard_folders" {
