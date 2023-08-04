@@ -35,7 +35,7 @@ variable "grafana_url" {
   description = "The url to your Grafana instance."
   type        = string
 }
-output "grafana_auth" {
+variable "grafana_auth" {
   description = "The Auth token used to make API calls against grafana."
   value = grafana_service_account_token.admin_service_account_token.key
   sensitive = true
