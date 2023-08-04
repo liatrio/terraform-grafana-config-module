@@ -41,7 +41,7 @@ data "aws_secretsmanager_secret_version" "amg_token" {
 
 provider "grafana" {
   url  = local.grafana_url
-  auth = data.aws_secretsmanager_secret_version.amg_token.key
+  auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
 }
 
 resource "grafana_folder" "dashboard_folders" {
