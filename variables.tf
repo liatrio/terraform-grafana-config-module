@@ -35,3 +35,10 @@ variable "grafana_url" {
   description = "The url to your Grafana instance."
   type        = string
 }
+
+variable "asm_api_token_name" {
+  description = "Name of the ASM that holds the Grafana API Token."
+  type        = string
+  sensitive   = true
+  default     = "amg-api-token"
+}

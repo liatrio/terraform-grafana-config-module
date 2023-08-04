@@ -36,7 +36,7 @@ locals {
 }
 
 data "aws_secretsmanager_secret_version" "amg_token" {
-  secret_id = "AMG_API_Token"
+  secret_id = var.asm_api_token_name
 }
 
 provider "grafana" {
