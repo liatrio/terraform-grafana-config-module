@@ -1,5 +1,13 @@
 # terraform-grafana-config-module
 
+## Grafana MyAccess Permissions
+The following permissions will give access to modify Grafana, if you do not have one of these permissions you will be defaulted to **viewer**:
+* Grafana_DEV_Cybersecurity_Editor
+
+* Grafana_DEV_Cybersecurity_Admin
+
+DEV can be replaced with the desired environment.
+
 ## Terraform Documentation
 
 <!-- BEGIN_TF_DOCS -->
