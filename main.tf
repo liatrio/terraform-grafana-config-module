@@ -36,7 +36,7 @@ data "aws_secretsmanager_secret_version" "amg_sa_token" {
 }
 
 provider "grafana" {
-  url  = local.grafana_url
+  url  = var.grafana_url
   auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
 }
 
