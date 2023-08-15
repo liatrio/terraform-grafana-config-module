@@ -1,7 +1,6 @@
 
 locals {
   org_id      = 1
-  grafana_url = var.grafana_url
 
   # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
   subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
