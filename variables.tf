@@ -40,12 +40,10 @@ variable "asm_api_token_name" {
   description = "Name of the ASM that holds the Grafana API Token."
   type        = string
   sensitive   = true
-  default     = "amg-api-token"
 }
 
 variable "asm_sa_token_name" {
   description = "Name of the ASM that holds the Grafana Service Account Token."
   type        = string
   sensitive   = true
-  default     = "amg-sa-token"
 }
