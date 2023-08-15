@@ -2,11 +2,11 @@
 locals {
   org_id      = 1
 
-  # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
+  # Creates a set containing all the files and subfolder paths in the "./dashboards" directory. 
   subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
   # Creates a list that contains the names of the subfolders.
   subfolder_names = distinct([for path in local.subfolders_and_files_set : dirname(path)])
-  # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.
+  # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.  
   grafana_folder_map = {
     for folder in toset(local.subfolder_names) : folder => grafana_folder.dashboard_folders[folder]
   }
@@ -26,17 +26,16 @@ locals {
   ])
 }
 
-data "aws_secretsmanager_secret_version" "amg_token" {
-  secret_id = var.asm_api_token_name
-}
-
-data "aws_secretsmanager_secret_version" "amg_sa_token" {
-  secret_id = var.asm_sa_token_name
-}
-
 provider "grafana" {
   url  = var.grafana_url
   auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
+}
+
+data "aws_secretsmanager_secret_version" "amg_token" {
+  secret_id = var.asm_api_token_name
+}
+data "aws_secretsmanager_secret_version" "amg_sa_token" {
+  secret_id = var.asm_sa_token_name
 }
 
 resource "grafana_folder" "dashboard_folders" {
