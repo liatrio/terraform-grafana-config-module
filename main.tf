@@ -63,6 +63,7 @@ resource "grafana_data_source" "data_source_from_map" {
   is_default = false
   json_data_encoded = jsonencode({
     default_region  = var.aws_region
+    httpMethod      = "POST"
     sigv4_auth      = true
     sigv4_auth_type = "ec2_iam_role"//"workspace-iam-role"
     sigv4_region    = var.aws_region
