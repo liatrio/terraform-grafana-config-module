@@ -1,6 +1,6 @@
 
 locals {
-  org_id      = 1
+  org_id = 1
 
   # Creates a set containing all the files and subfolder paths in the "./dashboards" directory. 
   subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
@@ -63,13 +63,13 @@ resource "grafana_data_source" "data_source_from_map" {
   # TODO: The Key names are wrong in current implementation, should be camelcase and not snake case.
   is_default = false
   json_data_encoded = jsonencode({
-    default_region = var.aws_region
-    httpMethod = "POST"
-    sigV4Auth = true
-    sigV4AuthType = "ec2_iam_role"
-    sigV4Region = var.aws_region
-    sigv4_auth = true
+    default_region  = var.aws_region
+    httpMethod      = "POST"
+    sigV4Auth       = true
+    sigV4AuthType   = "ec2_iam_role"
+    sigV4Region     = var.aws_region
+    sigv4_auth      = true
     sigv4_auth_type = "workspace-iam-role"
-    sigv4_region = var.aws_region
+    sigv4_region    = var.aws_region
   })
 }
