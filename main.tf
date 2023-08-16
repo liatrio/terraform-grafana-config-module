@@ -34,9 +34,9 @@ provider "grafana" {
 data "aws_secretsmanager_secret_version" "amg_token" {
   secret_id = var.asm_api_token_name
 }
-data "aws_secretsmanager_secret_version" "amg_sa_token" {
-  secret_id = var.asm_sa_token_name
-}
+# data "aws_secretsmanager_secret_version" "amg_sa_token" {
+#   secret_id = var.asm_sa_token_name
+# }
 
 resource "grafana_folder" "dashboard_folders" {
   for_each = toset(local.subfolder_names)
@@ -64,7 +64,7 @@ resource "grafana_data_source" "data_source_from_map" {
   json_data_encoded = jsonencode({
     default_region  = var.aws_region
     sigv4_auth      = true
-    sigv4_auth_type = "workspace-iam-role"
+    sigv4_auth_type = "ec2_iam_role"//"workspace-iam-role"
     sigv4_region    = var.aws_region
   })
 }
