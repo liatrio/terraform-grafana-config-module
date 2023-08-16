@@ -66,7 +66,7 @@ resource "grafana_data_source" "data_source_from_map" {
     default_region = var.aws_region
     httpMethod = "POST"
     sigV4Auth = true
-    sigV4AuthType = "ec2_iam_role"
+    sigV4AuthType = "workspace-iam-role"
     sigV4Region = var.aws_region
     sigv4_auth = true
     sigv4_auth_type = "workspace-iam-role"
