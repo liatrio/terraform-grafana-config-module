@@ -27,7 +27,6 @@ No modules.
 | [grafana_dashboard.dashboard_from_file](https://registry.terraform.io/providers/grafana/grafana/2.1.0/docs/resources/dashboard) | resource |
 | [grafana_data_source.data_source_from_map](https://registry.terraform.io/providers/grafana/grafana/2.1.0/docs/resources/data_source) | resource |
 | [grafana_folder.dashboard_folders](https://registry.terraform.io/providers/grafana/grafana/2.1.0/docs/resources/folder) | resource |
-| [aws_secretsmanager_secret_version.amg_sa_token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 | [aws_secretsmanager_secret_version.amg_token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
 ## Inputs
