@@ -60,12 +60,16 @@ resource "grafana_data_source" "data_source_from_map" {
   url      = each.value["data_source_url"]
 
   # Giving priority to Managed Prometheus datasources
+  # TODO: The Key names are wrong in current implementation, should be camelcase and not snake case.
   is_default = false
   json_data_encoded = jsonencode({
-    default_region  = var.aws_region
-    httpMethod      = "POST"
-    sigv4_auth      = true
-    sigv4_auth_type = "ec2_iam_role"//"workspace-iam-role"
-    sigv4_region    = var.aws_region
+    default_region = var.aws_region
+    httpMethod = "POST"
+    sigV4Auth = true
+    sigV4AuthType = "ec2_iam_role"
+    sigV4Region = var.aws_region
+    sigv4_auth = true
+    sigv4_auth_type = "workspace-iam-role"
+    sigv4_region = var.aws_region
   })
 }
