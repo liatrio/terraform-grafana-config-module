@@ -1,21 +1,12 @@
-terraform {
-  required_providers {
-    grafana = {
-      source  = "grafana/grafana"
-      version = "2.1.0"
-    }
-  }
-}
 
 locals {
-  org_id      = 1
-  grafana_url = var.grafana_url
+  org_id = 1
 
-  # Creates a set containing all the files and subfolder paths in the "./dashboards" directory.
+  # Creates a set containing all the files and subfolder paths in the "./dashboards" directory. 
   subfolders_and_files_set = fileset("${var.dashboard_configs_folder}", "**")
   # Creates a list that contains the names of the subfolders.
   subfolder_names = distinct([for path in local.subfolders_and_files_set : dirname(path)])
-  # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.
+  # Creates a dictionary, mapping folder names to their corresponding dashboard folders in Grafana.  
   grafana_folder_map = {
     for folder in toset(local.subfolder_names) : folder => grafana_folder.dashboard_folders[folder]
   }
@@ -35,14 +26,17 @@ locals {
   ])
 }
 
+provider "grafana" {
+  url  = var.grafana_url
+  auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
+}
+
 data "aws_secretsmanager_secret_version" "amg_token" {
   secret_id = var.asm_api_token_name
 }
-
-provider "grafana" {
-  url  = local.grafana_url
-  auth = data.aws_secretsmanager_secret_version.amg_token.secret_string
-}
+# data "aws_secretsmanager_secret_version" "amg_sa_token" {
+#   secret_id = var.asm_sa_token_name
+# }
 
 resource "grafana_folder" "dashboard_folders" {
   for_each = toset(local.subfolder_names)
@@ -66,9 +60,14 @@ resource "grafana_data_source" "data_source_from_map" {
   url      = each.value["data_source_url"]
 
   # Giving priority to Managed Prometheus datasources
+  # TODO: The Key names are wrong in current implementation, should be camelcase and not snake case.
   is_default = false
   json_data_encoded = jsonencode({
     default_region  = var.aws_region
+    httpMethod      = "POST"
+    sigV4Auth       = true
+    sigV4AuthType   = "ec2_iam_role"
+    sigV4Region     = var.aws_region
     sigv4_auth      = true
     sigv4_auth_type = "workspace-iam-role"
     sigv4_region    = var.aws_region

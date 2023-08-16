@@ -33,7 +33,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_asm_api_token_name"></a> [asm\_api\_token\_name](#input\_asm\_api\_token\_name) | Name of the ASM that holds the Grafana API Token. | `string` | `"amg-api-token"` | no |
+| <a name="input_asm_api_token_name"></a> [asm\_api\_token\_name](#input\_asm\_api\_token\_name) | Name of the ASM that holds the Grafana API Token. | `string` | n/a | yes |
+| <a name="input_asm_sa_token_name"></a> [asm\_sa\_token\_name](#input\_asm\_sa\_token\_name) | Name of the ASM that holds the Grafana Service Account Token. | `string` | n/a | yes |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Contains the AWS Region that Grafana is running in. | `string` | `"us-east-1"` | no |
 | <a name="input_dashboard_configs_folder"></a> [dashboard\_configs\_folder](#input\_dashboard\_configs\_folder) | The path to the dashboards folder where the configuration files are located. | `string` | n/a | yes |
 | <a name="input_data_source_map"></a> [data\_source\_map](#input\_data\_source\_map) | A list of maps representing datasource information. Each map defines a data source with its type, name, and url. | `list(map(string))` | <pre>[<br>  {<br>    "data_source_name": "CloudName1",<br>    "data_source_type": "cloudwatch",<br>    "data_source_url": "https://cloudwatch.amazonaws.com"<br>  },<br>  {<br>    "data_source_name": "PromName1",<br>    "data_source_type": "prometheus",<br>    "data_source_url": "https://prometheus.amazonaws.com"<br>  },<br>  {<br>    "data_source_name": "PromName2",<br>    "data_source_type": "prometheus",<br>    "data_source_url": "https://prometheus2.amazonaws.com"<br>  }<br>]</pre> | no |
