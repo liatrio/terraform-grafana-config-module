@@ -80,6 +80,6 @@ resource "grafana_data_source" "data_source_from_map" {
 
 resource "aws_prometheus_rule_group_namespace" "alarm_rule" {
   name         = "rules"
-  workspace_id = aws_prometheus_workspace.amp_ws[0].id
-  data         = file("./rules.yml")
+  workspace_id = var.prometheus_workspace_id
+  data         = var.alarm_rules
 }
