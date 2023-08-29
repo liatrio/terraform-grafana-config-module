@@ -47,3 +47,13 @@ variable "asm_sa_token_name" {
   type        = string
   sensitive   = true
 }
+
+variable "alarm_rules" {
+  description = "The contents of the alarm rules file."
+  type        = string
+}
+
+variable "prometheus_workspace_id" {
+  description = "The workspace ID of the prometheus instance you wish to modify."
+  type        = string
+}

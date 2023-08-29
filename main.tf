@@ -72,6 +72,14 @@ resource "grafana_data_source" "data_source_from_map" {
     sigv4_auth      = true
     sigv4_auth_type = "workspace-iam-role"
     sigv4_region    = var.aws_region
-    manageAlerts    = true
+    manageAlerts    = false
   })
+}
+
+# --------- Prometheus Configs --------- #
+
+resource "aws_prometheus_rule_group_namespace" "alarm_rule" {
+  name         = "rules"
+  workspace_id = var.prometheus_workspace_id
+  data         = var.alarm_rules
 }
