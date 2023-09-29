@@ -28,16 +28,23 @@ locals {
 
 provider "grafana" {
   url  = var.grafana_url
-  auth = data.aws_secretsmanager_secret_version.amg_sa_token.secret_string
+  auth = aws_grafana_workspace_api_key.key.key
 }
 
-data "aws_secretsmanager_secret_version" "amg_token" {
-  secret_id = var.asm_api_token_name
+resource "aws_grafana_workspace_api_key" "key" {
+  key_name        = "amg_api_key"
+  key_role        = "ADMIN"
+  seconds_to_live = 180
+  workspace_id    = var.grafana_workspace_id
 }
 
-data "aws_secretsmanager_secret_version" "amg_sa_token" {
-  secret_id = var.asm_sa_token_name
-}
+# data "aws_secretsmanager_secret_version" "amg_token" {
+#   secret_id = var.asm_api_token_name
+# }
+
+# data "aws_secretsmanager_secret_version" "amg_sa_token" {
+#   secret_id = var.asm_sa_token_name
+# }
 
 resource "grafana_folder" "dashboard_folders" {
   for_each = toset(local.subfolder_names)
