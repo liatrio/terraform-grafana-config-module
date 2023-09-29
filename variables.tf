@@ -1,8 +1,3 @@
-# variable "grafana_asm_key" {
-#   description = "Contains the Grafana API Token, given to the provider so that it can interact with grafana."
-#   type        = string
-#   default     = "AMG_API_Token"
-# }
 
 variable "aws_region" {
   description = "Contains the AWS Region that Grafana is running in."
