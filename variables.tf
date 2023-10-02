@@ -1,8 +1,3 @@
-variable "grafana_asm_key" {
-  description = "Contains the Grafana API Token, given to the provider so that it can interact with grafana."
-  type        = string
-  default     = "AMG_API_Token"
-}
 
 variable "aws_region" {
   description = "Contains the AWS Region that Grafana is running in."
@@ -36,18 +31,6 @@ variable "grafana_url" {
   type        = string
 }
 
-variable "asm_api_token_name" {
-  description = "Name of the ASM that holds the Grafana API Token."
-  type        = string
-  sensitive   = true
-}
-
-variable "asm_sa_token_name" {
-  description = "Name of the ASM that holds the Grafana Service Account Token."
-  type        = string
-  sensitive   = true
-}
-
 variable "alarm_rules" {
   description = "The contents of the alarm rules file."
   type        = string
@@ -55,5 +38,10 @@ variable "alarm_rules" {
 
 variable "prometheus_workspace_id" {
   description = "The workspace ID of the prometheus instance you wish to modify."
+  type        = string
+}
+
+variable "grafana_workspace_id" {
+  description = "The workspace ID of the grafana instance you wish to modify."
   type        = string
 }
