@@ -37,7 +37,7 @@ resource "aws_grafana_workspace_api_key" "key" {
   seconds_to_live = 180
   workspace_id    = var.grafana_workspace_id
   lifecycle {
-    ignore_changes = [key]
+    create_before_destroy = true
   }
 }
 
