@@ -36,6 +36,9 @@ resource "aws_grafana_workspace_api_key" "key" {
   key_role        = "ADMIN"
   seconds_to_live = 180
   workspace_id    = var.grafana_workspace_id
+  lifecycle {
+    ignore_changes = [key]
+  }
 }
 
 resource "grafana_folder" "dashboard_folders" {
