@@ -31,13 +31,19 @@ provider "grafana" {
   auth = aws_grafana_workspace_api_key.key.key
 }
 
+resource "null_resource" "replace_trigger" {
+  triggers = {
+    the_trigger = uuid()
+  }
+}
+
 resource "aws_grafana_workspace_api_key" "key" {
   key_name        = "amg_api_key"
   key_role        = "ADMIN"
   seconds_to_live = 180
   workspace_id    = var.grafana_workspace_id
   lifecycle {
-    create_before_destroy = true
+    replace_triggered_by = null_resource.replace_trigger
   }
 }
 

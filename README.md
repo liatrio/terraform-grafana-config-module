@@ -16,6 +16,7 @@
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.7.0 |
 | <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 2.1.0 |
+| <a name="provider_null"></a> [null](#provider\_null) | n/a |
 
 ## Modules
 
@@ -30,6 +31,7 @@ No modules.
 | [grafana_dashboard.dashboard_from_file](https://registry.terraform.io/providers/grafana/grafana/2.1.0/docs/resources/dashboard) | resource |
 | [grafana_data_source.data_source_from_map](https://registry.terraform.io/providers/grafana/grafana/2.1.0/docs/resources/data_source) | resource |
 | [grafana_folder.dashboard_folders](https://registry.terraform.io/providers/grafana/grafana/2.1.0/docs/resources/folder) | resource |
+| [null_resource.replace_trigger](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 
 ## Inputs
 
