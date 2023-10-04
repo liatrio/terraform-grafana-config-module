@@ -43,7 +43,9 @@ resource "aws_grafana_workspace_api_key" "key" {
   seconds_to_live = 180
   workspace_id    = var.grafana_workspace_id
   lifecycle {
-    replace_triggered_by = null_resource.replace_trigger
+    replace_triggered_by = [
+      null_resource.replace_trigger
+    ]
   }
 }
 
