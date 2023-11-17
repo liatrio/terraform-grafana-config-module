@@ -45,11 +45,7 @@ resource "aws_grafana_workspace_api_key" "key" {
   lifecycle {
     create_before_destroy = true
   }
-  # lifecycle {
-  #   replace_triggered_by = [
-  #     null_resource.replace_trigger
-  #   ]
-  # }
+  
 }
 
 resource "grafana_folder" "dashboard_folders" {
@@ -57,6 +53,7 @@ resource "grafana_folder" "dashboard_folders" {
 
   org_id = local.org_id
   title  = each.key
+  depends_on = [aws_grafana_workspace_api_key.key]
 }
 
 resource "grafana_dashboard" "dashboard_from_file" {
@@ -65,6 +62,7 @@ resource "grafana_dashboard" "dashboard_from_file" {
   overwrite   = true
   folder      = local.grafana_folder_map[each.value["folder_name"]].id
   config_json = file("${var.dashboard_configs_folder}/${each.key}")
+  depends_on = [aws_grafana_workspace_api_key.key]
 }
 
 resource "grafana_data_source" "data_source_from_map" {
@@ -87,6 +85,7 @@ resource "grafana_data_source" "data_source_from_map" {
     sigv4_region    = var.aws_region
     manageAlerts    = false
   })
+  depends_on = [aws_grafana_workspace_api_key.key]
 }
 
 # --------- Prometheus Configs --------- #
@@ -95,4 +94,5 @@ resource "aws_prometheus_rule_group_namespace" "alarm_rule" {
   name         = "rules"
   workspace_id = var.prometheus_workspace_id
   data         = var.alarm_rules
+  depends_on = [aws_grafana_workspace_api_key.key]
 }
